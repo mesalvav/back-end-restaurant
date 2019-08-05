@@ -3,7 +3,7 @@ const router  = express.Router();
 const Dish = require('../models/dishes')
 const uploadCloud = require('../config/cloudinary-setup.js');
 
-/* GET home page */
+/* all dishes */
 router.get('/', (req, res, next) => {
     Dish.find()
     .then( dishesList =>{
@@ -12,6 +12,19 @@ router.get('/', (req, res, next) => {
     .catch(err =>{
       console.log(err);
     })
+
+});
+
+router.get('/:dishid', (req, res, next) => {
+  console.log(" "+ req.params.dishid);
+
+  Dish.findById(req.params.dishid).populate('comments')
+  .then( dishesx =>{
+    res.status(200).json(dishesx );
+  })
+  .catch(err =>{
+    console.log(err);
+  })
 
 });
 
