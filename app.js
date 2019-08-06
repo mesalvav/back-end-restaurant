@@ -9,7 +9,7 @@ const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
 
-// const cors = require('cors');
+const cors = require('cors');
 require('./config/passport-stuff');
 
 const session       = require('express-session');
@@ -62,6 +62,11 @@ app.use(session({
 // USE passport.initialize() and passport.session() HERE:
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:3000']
+}));
 
 const index = require('./routes/index');
 app.use('/', index);
